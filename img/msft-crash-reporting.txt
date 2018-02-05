@@ -1,0 +1,166 @@
+When Firefox Crashes
+or
+to kill -9 a content process
+
+I'm Lonnen
+* I've worked on crash reporting and telemetry at Mozilla for 7 years
+
+Today we're going to focus on Firefox.
+
+Browsers are complex
+Browsers operate in an uncontrolled environment
+Browsers execute other people's code
+
+<img> breakpad crash report </img>
+
+Detection, Response, Recovery
+
+Qualitative Feedback
+Crash Reports <--
+Product Telemetry
+
+What's the difference?
+
+Crash Reports are comprehensive, collected once, potentially sensitive
+
+Product Telemetry is less detailed, on going, non sensitive
+
+Data Classification in 4 Categories
+
+1: Technical Data
+
+2: Interaction Data
+
+3: Web Activity Data
+
+4: Highly Sensitive Data
+
+crash reports have fields in each category
+
+Requires user consent before transmission<br />
+Designed to be difficult to tie back to submitter<br />
+Retention policies limit how long we hold it<br />
+Strong access controls required to see it
+
+In december we found a bug in the report submitter so we purged all our data
+
+crash-stats processes reports
+<img> reports.png </img>
+
+aggregates and splits according to these categories
+<img> signature report </img>
+<img> tcbs </img>
+<img> search </img>
+
+makes available downstream
+<img> api </img>
+
+Crash Reports, by the Numbers
+* 3 million per day
+* 3000 crashes per minute, peak
+* Median size 150k, max size 20MB
+* 250 TB stored in Primary Storage
+* shards and indexes in postgres (deprecated), elastic search, downstream
+
+
+<img> architecture.png </img>
+
+Zoom: Ingestion
+breakpad -> antenna -> s3
+
+Zoom: Processing
+s3 -> work queue -> processor -> s3, postgres, es, data platform
+
+Which fields end up in which tools depends on the data classification
+
+Zoom: Reporting
+
+Also:
+spark compute clusters for analysts
+dashboards over the api
+browser addons to integrate crash report data with bug tracking
+
+Anatomy of a Crash Report
+<img> report1
+<img> report2
+<img> report3
+<img> report4
+
+What is not visible?
+
+URL
+Email (if supplied)
+Minidump
+
+Signatures
+<img> sigsum1
+<img> sigsum2
+<img> sigsum3
+<img> sigsum4
+
+
+Top Crasher by Signature
+<img> tcbs
+<img> tcbs2
+
+Unsolved Problems
+* Type I and II errors in Signature Generation
+** I: need to split a bucket into multiple signatures
+** II: need to group disparate problems. much harder
+* OOM / No crashing thread
+** some errors get away from us, blow up our toolchain or have no good diagnostic
+* Blind Spots
+** Non-crash error states (JS)
+** crashes in JITed code are lumped together
+** OS error reporter catches the crash
+* Alternatives to the stack for signature generation
+** There are other ways to cluster and classify the space
+** Would be great to have an Netflix style "these crashes are the similar because"
+** machine details, dlls or addons, hot spots in the codebase, custom prefs, etc
+** Currently this work is very manually intensive, specialized, often dull
+
+Where are we headed?
+
+Merging Data Sources
+* crashes are one of several quality metrics
+* We have crash metadata, sub-crash errors, errors from other systems
+* Integrate them into a data set for comprehensive look at rates, quality, and product integrity
+* We'd love to be able to include crashes caught by Microsoft here
+
+Moving from specific reports to investigative tools
+* specific reports are expensive, long to produce, painful to maintain, often didn't see much use
+* tools are a big lift, but pay dividends
+* leverage general tools (parquet, redash, python notebooks) where possible
+
+Moving to specialized data collections
+* i.e. helps to have independent events for rates (crash pings) and investigation of a specific problem (report)
+* data has to pay rent
+* when we get it wrong, there are consequences
+** sometimes we delete all our data (discuss december incident)
+* segmented collection by type of event, content, risk
+* limit the scope by size, time domain, audience, etc
+* resolves trade offs between collection and investigation
+
+Rapid Detection and Response
+* putting more thought into mitigating the impact of a crash
+* stewarding our pre-release audiences to ensure we get representative, high quality signal earlier
+* prioritizing rapid detection, triage, and recovery
+* client self-repair
+
+
+Appendix
+
+2017 Crash Reports by the Numbers
+* 10 year old project
+* 44 production deployments
+* Project Metrics (876 new bugs, 108 contributors, 1200 bugs resolved, 355 PRs, LOC +47083, -882641, 954 files)
+** http://bluesock.org/~willkg/blog/mozilla/socorro_2017.html
+
+
+
+
+Implementation Details
+* mostly python, javascript in the webapp, some c++ bits
+* hosted on AWS, S3, postgres, elastic search
+* used to include PHP, perl, pig, Java, hbase, ceph, other teck
+* moving from a hyper flexible architecture to compossible, purpose built components

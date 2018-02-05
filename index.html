@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/Webpage">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Error Reporting @ Mozilla</title>
+    <meta name="description" content="Possibly the most insightful presentation of all time" />
+
+    <link rel="stylesheet" href="decky.css">
+    <link rel="stylesheet" href="solarized-dark.css">
+    <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css">
+    <script src="highlight.min.js"></script>
+  </head>
+  <body>
+
+    <section>
+      <h2 style="line-height: 0.4;">-------------------</h2>
+      <h1>| Send Report |</h1>
+      <h2 style="line-height: 0.4; margin-bottom: 2rem;">-------------------</h2>
+      <p>Firefox Crash Collection and Analysis</p>
+    </section>
+
+    <section>
+      <img src="img/twitter.png" />
+    </section>
+
+    <section>
+      <img src="img/nightly-logo.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/tab-crash.png" />
+    </section>
+
+    <section>
+      Browsers are complex.
+    </section>
+
+    <section>
+      Browsers run on other people's computers.
+    </section>
+
+    <section>
+      Browsers execute arbitrary,</br> third party code.
+    </section>
+
+    <section>
+      <img src="img/breakpad.png" />
+    </section>
+
+    <section>
+      Detection, Response, Recovery
+    </section>
+
+    <section>
+      Qualitative Feedback<br />
+      <h3>Crash Reports</h3><br />
+      Product Telemetry
+    </section>
+
+    <section>
+      <p><b>Crash Reports</b> are comprehensive, collected once, and potentially sensitive</p>
+    </section>
+
+    <section>
+      <p><b>Product Telemetry</b> is less specific, collected continually, and non-sensitive
+    </section>
+
+    <section>
+      <h3>Data Classification<br /> in 4 Categories</h3>
+      <a class="cite note" href="https://wiki.mozilla.org/Firefox/Data_Collection#Data_Collection_Categories">source</a>
+    </section>
+
+    <section>
+      <h3 class="context-bar">Data Classification in 4 Categories</h3>
+      1: Technical Data
+    </section>
+
+    <section>
+      <h3 class="context-bar">Data Classification in 4 Categories</h3>
+      2: Interaction Data
+    </section>
+
+    <section>
+      <h3 class="context-bar">Data Classification in 4 Categories</h3>
+      3: Web Activity Data
+    </section>
+
+    <section>
+      <h3 class="context-bar">Data Classification in 4 Categories</h3>
+      4: Highly Sensitive Data
+    </section>
+
+    <section>
+      <h3>Crash Reports</h3> have fields in each category
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Reports are Sensitive</h3>
+      Reports require user consent before transmission
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Reports are Sensitive</h3>
+      Reports are designed to be difficult to tie back to submitter
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Reports are Sensitive</h3>
+      Retention policies limit how long we hold reports
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Reports are Sensitive</h3>
+      Signing a data handler's agreement required to see reports
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Reports are Sensitive</h3>
+      In December we found a bug in the report submitter.
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Reports are Sensitive</h3>
+      In December
+      we found a bug in the report submitter<br />
+      <b>so we purged all of our data.</b>
+    </section>
+
+    <section>
+      <h3>By the numbers...</h3>
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Report Quantity</h3>
+      2k - 3k reports per minute<br />
+      3 MM reports per day
+    </section>
+
+    <section>
+      <h3 class="context-bar">Crash Report Volume</h3>
+      Median size: 150 KB<br />
+      Max size: 20 MB<br />
+      Total: 250 TB in Primary Storage
+    </section>
+
+    <section>
+      TODO: architecture.png
+    </section>
+
+    <section>
+      TODO: architecture-ingestion.png
+      breakpad -> antenna -> s3
+    </section>
+
+    <section>
+      TODO: architecture-processing.png
+      s3 -> RMQ -> processor -> s3, postgres, es, data platform
+    </section>
+
+    <section>
+      TODO: architecture-reporting.png
+      crons <-> postgres, es, s3 <-> webapp
+    </section>
+
+    <section>
+      <img class="cover" src="img/search.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/api.png" />
+    </section>
+
+    <section>
+      <h3 class="context-bar">Other Interfaces</h3>
+      <img src="img/jupyter.png" />
+    </section>
+
+    <section>
+      <h3 class="context-bar">Other Interfaces</h3>
+      <img src="img/nightly-longterm.png" />
+    </section>
+
+    <section>
+      <h3 class="context-bar">Other Interfaces</h3>
+      <img src="img/crashstop.png" />
+    </section>
+
+    <section>
+      <h3>Let's look at some reports</h3>
+      <img src="img/reports.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/report1.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/report2-metadata.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/report3-bugs.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/report4-modules.png" />
+    </section>
+
+    <section>
+      <h3>What is not public?</h3>
+    </section>
+
+    <section>
+      <h3 class="context-bar">What is not public?</h3>
+      URL<br/ >
+      Email<br />
+      Minidump<br />
+      Raw Crash
+    </section>
+
+    <section>
+      <h3>Analysis at Scale</h3>
+    </section>
+
+    <section>
+      <h3>Crash Signatures</h3>
+      are an attempt to group similar reports
+    </section>
+
+    <section>
+      Each crash has one signature.
+    </section>
+
+    <section>
+      <img class="cover" src="img/sigsum1.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/sigsum2.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/sigsum3.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/sigsum4.png" />
+    </section>
+
+    <section>
+      How do we focus on the most important Signatures?
+    </section>
+
+    <section>
+      <h3>Top Crashers by Signature</h3>
+      <img src="img/tcbs.png" />
+    </section>
+
+    <section>
+      <img class="cover" src="img/tcbs2.png" />
+    </section>
+
+    <section>
+      Open Problems
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems</h3>
+      Signature Generation
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems :: Signatures</h3>
+      One signature clusters<br /> multiple issues together
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems :: Signaturess</h3>
+      One issue is scattered<br /> over multiple signatures
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems :: Signatures</h3>
+      Signatures only consider<br /> the crashing stack
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      Non-crash Error States
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      No Crashing Thread
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      Sometimes the machine cannot generate a full crash report
+    </section>
+
+    <section>
+      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      Sometimes the report blows up our processing pipeline
+    </section>
+
+    <section>
+      <h2>Looking ahead</h2>
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead</h3>
+      Alternatives to the stack for signature generation / clustering
+    </section>
+
+    <section>
+      <h3 class="context-bar">Alternative Clustering Techniques</h3>
+      Cluster and classify over all fields of a crash report
+    </section>
+
+    <section>
+      <h3 class="context-bar">Alternative Clustering Techniques</h3>
+      "These crashes are grouped together because..."
+    </section>
+
+    <section>
+      <h3 class="context-bar">"These crashes are grouped together because..."</h3>
+      code author<br />
+      graphics card<br />
+      same user (email)<br />
+      etc.
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead</h3>
+      <h2>Merging Signals</h2>
+    </section>
+
+    <section>
+      <h3 class="context-bar">Merging Signals</h3>
+      Telemetry data for aggregates.<br \>
+      Crash Reports for specifics.
+    </section>
+
+    <section>
+      <h3 class="context-bar">Merging Signals</h3>
+      <h3>Javascript Error Collection</h3>
+      (coming soon)
+    </section>
+
+    <section>
+      <h3 class="context-bar">Merging Signals</h3>
+      <h3>other error sources</h3>
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead</h3>
+      <h2>Generalizing Tools</h2>
+    </section>
+
+    <section>
+      <h3 class="context-bar">Generalizing Tools</h3>
+      Use a common set of analysis tools across data sets
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead</h3>
+      Segmented Data Collections
+    </section>
+
+    <section>
+      <h3 class="context-bar">Segmented Data Collection</h3>
+      Independent data collections for specific inquiries
+    </section>
+
+    <section>
+      <h3 class="context-bar">Segmented Data Collection</h3>
+      Only collect what we are actively looking into
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead</h3>
+      Client Self-Repair
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead :: Non-Technical</h3>
+      Testing changes in representative populations
+    </section>
+
+    <section>
+      <h3 class="context-bar">Representative Populations</h3>
+      Rethinking the classic<br />
+      alpha -> beta -> release<br />
+      paradigm
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead :: Non-Technical</h3>
+      Mitigating the user-experience impact of a crash
+    </section>
+
+    <section>
+      <h2 style="margin-bottom: 2rem;">Questions?</h2>
+      @LONNEN<br />
+      <a class="cite" href="http://socorro.readthedocs.io/en/latest/">Project Docs</a>
+      <a class="cite" href="https://crash-stats.mozilla.com/">Crash Stats</a>
+    </section>
+
+    <footer>
+      <div class="progress talk-progress"></div>
+      <div class="progress time-progress"></div>
+    </footer>
+    <script src="decky.js"></script>
+    <script>
+
+      var els = document.querySelectorAll('code[data-src]');
+      Array.from(els).forEach(function (el) {
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", function () {
+          el.innerHTML = this.responseText.replace('<', '&lt;', 'g');
+          hljs.highlightBlock(el);
+        });
+        xhr.open("GET", el.getAttribute('data-src'));
+        xhr.send();
+      });
+
+      var iframes = document.querySelectorAll('iframe');
+      iframes = Array.from(iframes);
+      iframes.forEach(function (i) {
+        var src = i.src;
+        i.setAttribute('data-src', src);
+        i.src = '';
+      });
+
+      var talkProgress = document.querySelector('.talk-progress');
+      var timeProgress = document.querySelector('.time-progress');
+      var sTime;
+      var timer;
+      var going = false;
+      decky.onSlideChange = function (n) {
+        if (n > 1 && !going) {
+          going = true;
+          timer = setInterval(update, 100);
+          sTime = Date.now();
+          console.log('starting timer');
+        }
+
+        var pct = n / decky.num * 100;
+        talkProgress.style.transform = 'translate(' + pct + '%, 0)';
+
+        iframes.forEach(function (i) {
+          i.src = '';
+        });
+
+        var f = document.querySelector('.active iframe');
+        if (f && window.top === window) {
+          f.src = f.getAttribute('data-src');
+        }
+      };
+      function update() {
+        var time = Math.min(100, ((Date.now() - sTime) / (40 * 60 * 1000)) * 100);
+        timeProgress.style.transform = 'translate(' + time + '%, 0)';
+      }
+    </script>
+
+    <script>
+      var editors = document.querySelectorAll('style[contenteditable]');
+      for (var i =0; i < editors.length; i++) {
+        editors[i].addEventListener('keydown', function (e) {
+          e.stopPropagation();
+        }, false);
+      }
+    </script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
