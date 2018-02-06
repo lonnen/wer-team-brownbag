@@ -257,6 +257,7 @@ pre {
   position: absolute;;
   top: 0px;
   width: 100%;
+  min-width: 100vw;
   font-size: 1.7rem;
   padding: .3rem;
   background-color: #202340;

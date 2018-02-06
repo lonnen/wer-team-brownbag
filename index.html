@@ -33,14 +33,17 @@
     </section>
 
     <section>
+      <h3 class="context-bar">Why do Browsers Crash?</h3>
       Browsers are complex.
     </section>
 
     <section>
+      <h3 class="context-bar">Why do Browsers Crash?</h3>
       Browsers run on other people's computers.
     </section>
 
     <section>
+      <h3 class="context-bar">Why do Browsers Crash?</h3>
       Browsers execute arbitrary,</br> third party code.
     </section>
 
@@ -59,10 +62,12 @@
     </section>
 
     <section>
+      <h3 class="context-bar">What's the difference?</h3>
       <p><b>Crash Reports</b> are comprehensive, collected once, and potentially sensitive</p>
     </section>
 
     <section>
+      <h3 class="context-bar">What's the difference?</h3>
       <p><b>Product Telemetry</b> is less specific, collected continually, and non-sensitive
     </section>
 
@@ -116,12 +121,10 @@
     </section>
 
     <section>
-      <h3 class="context-bar">Crash Reports are Sensitive</h3>
       In December we found a bug in the report submitter.
     </section>
 
     <section>
-      <h3 class="context-bar">Crash Reports are Sensitive</h3>
       In December
       we found a bug in the report submitter<br />
       <b>so we purged all of our data.</b>
@@ -132,35 +135,40 @@
     </section>
 
     <section>
-      <h3 class="context-bar">Crash Report Quantity</h3>
+      <h3 class="context-bar">Crash Reports by the numbers</h3>
       2k - 3k reports per minute<br />
       3 MM reports per day
     </section>
 
     <section>
-      <h3 class="context-bar">Crash Report Volume</h3>
+      <h3 class="context-bar">Crash Reports by the numbers</h3>
       Median size: 150 KB<br />
       Max size: 20 MB<br />
       Total: 250 TB in Primary Storage
     </section>
 
     <section>
-      TODO: architecture.png
+      <h3 class="context-bar">System Architecture</h3>
+      <img src="img/architecture.png" />
     </section>
 
     <section>
-      TODO: architecture-ingestion.png
-      breakpad -> antenna -> s3
+      <h3 class="context-bar">Crash Report Ingestion</h3>
+      <img src="img/antenna.png" />
     </section>
 
     <section>
-      TODO: architecture-processing.png
-      s3 -> RMQ -> processor -> s3, postgres, es, data platform
+      <h3 class="context-bar">Crash Report Processing</h3>
+      <img src="img/architecture-processor.png" />
     </section>
 
     <section>
-      TODO: architecture-reporting.png
-      crons <-> postgres, es, s3 <-> webapp
+      <h3 class="context-bar">Crash Report Warehousing</h3>
+      <img src="img/architecture-reporting.png" />
+    </section>
+
+    <section>
+      <h3>Investigation and Reporting Interfaces</h3>
     </section>
 
     <section>
@@ -271,65 +279,67 @@
     </section>
 
     <section>
-      <h3 class="context-bar">Open Problems :: Signatures</h3>
+      <h3 class="context-bar">Open Problems with Signatures</h3>
       One signature clusters<br /> multiple issues together
     </section>
 
     <section>
-      <h3 class="context-bar">Open Problems :: Signaturess</h3>
+      <h3 class="context-bar">Open Problems with Signaturess</h3>
       One issue is scattered<br /> over multiple signatures
     </section>
 
     <section>
-      <h3 class="context-bar">Open Problems :: Signatures</h3>
+      <h3 class="context-bar">Open Problems with Signatures</h3>
       Signatures only consider<br /> the crashing stack
     </section>
 
     <section>
-      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      <h3 class="context-bar">Open Problems: Known Unknowns</h3>
       Non-crash Error States
     </section>
 
     <section>
-      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      <h3 class="context-bar">Open Problems: Known Unknowns</h3>
       No Crashing Thread
     </section>
 
     <section>
-      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      <h3 class="context-bar">Open Problems: Known Unknowns</h3>
       Sometimes the machine cannot generate a full crash report
     </section>
 
     <section>
-      <h3 class="context-bar">Open Problems :: Blind Spots</h3>
+      <h3 class="context-bar">Open Problems: Known Unknowns</h3>
       Sometimes the report blows up our processing pipeline
     </section>
 
     <section>
-      <h2>Looking ahead</h2>
+      <h2>Looking Forward</h2>
     </section>
 
     <section>
-      <h3 class="context-bar">Looking Ahead</h3>
+      <h3 class="context-bar">Looking Forward</h3>
       Alternatives to the stack for signature generation / clustering
     </section>
 
     <section>
-      <h3 class="context-bar">Alternative Clustering Techniques</h3>
+      <h3 class="context-bar">Looking Forward</h3>
       Cluster and classify over all fields of a crash report
     </section>
 
     <section>
-      <h3 class="context-bar">Alternative Clustering Techniques</h3>
+      <h3 class="context-bar">Looking Forward</h3>
       "These crashes are grouped together because..."
     </section>
 
     <section>
-      <h3 class="context-bar">"These crashes are grouped together because..."</h3>
-      code author<br />
-      graphics card<br />
-      same user (email)<br />
-      etc.
+      <p>"These crashes are grouped together because..."</p>
+      <ul style="list-style-type: none;">
+      <li>code author</li>
+      <li>graphics card</li>
+      <li>same user (email)</li>
+      <li>etc.</li>
+      </ul>
     </section>
 
     <section>
@@ -376,7 +386,12 @@
 
     <section>
       <h3 class="context-bar">Segmented Data Collection</h3>
-      Only collect what we are actively looking into
+      Only collect when someone is investigating
+    </section>
+
+    <section>
+      <h3 class="context-bar">Looking Ahead</h3>
+      Anonymization Techniques
     </section>
 
     <section>
@@ -385,19 +400,19 @@
     </section>
 
     <section>
-      <h3 class="context-bar">Looking Ahead :: Non-Technical</h3>
-      Testing changes in representative populations
+      <h3 class="context-bar">Looking Ahead</h3>
+      Representative Test Populations
     </section>
 
     <section>
-      <h3 class="context-bar">Representative Populations</h3>
-      Rethinking the classic<br />
-      alpha -> beta -> release<br />
-      paradigm
+      <h3 class="context-bar">Looking Ahead</h3>
+      Rethinking the<br />
+      alpha, beta, release<br />
+      software lifecycle
     </section>
 
     <section>
-      <h3 class="context-bar">Looking Ahead :: Non-Technical</h3>
+      <h3 class="context-bar">Looking Ahead</h3>
       Mitigating the user-experience impact of a crash
     </section>
 
